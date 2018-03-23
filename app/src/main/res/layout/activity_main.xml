@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.signet.betaretetz.MainActivity">
-
+<!--
     <TextView
         android:id="@+id/txttitle"
         android:layout_width="wrap_content"
@@ -14,11 +14,33 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Entraze Technologies" />
-    <ListView
-        android:layout_width="match_parent"
+        -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
-        android:layout_below="@+id/txttitle"
-        />
+        android:layout_gravity="center"
+        android:orientation="vertical"
+       >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/recipe_placeholder_item" />
+
+            <include layout="@layout/recipe_placeholder_item" />
+
+            <include layout="@layout/recipe_placeholder_item" />
+
+        </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            />
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
 
 </RelativeLayout>

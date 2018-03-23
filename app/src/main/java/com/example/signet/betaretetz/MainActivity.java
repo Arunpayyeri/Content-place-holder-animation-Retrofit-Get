@@ -3,10 +3,12 @@ package com.example.signet.betaretetz;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 
 import com.example.signet.betaretetz.POJO.EmpListPOJO;
 import com.example.signet.betaretetz.POJO.Employee;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
@@ -19,14 +21,18 @@ public class MainActivity extends AppCompatActivity {
     List<Employee> list_emp;  // Hold the list of car companies
     ListView lv;
     Stethotest api;
+
+    private ShimmerFrameLayout mShimmerViewContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mShimmerViewContainer = findViewById(R.id.shimmer_view_container);
         lv=(ListView) findViewById(R.id.listView);
         api= (Stethotest) getApplication();
         restCall();
     }
+
     private void restCall() {
 
         //Creating a rest adapter
@@ -48,11 +54,17 @@ public class MainActivity extends AppCompatActivity {
                     Adapter arrayAdapter = new Adapter(getBaseContext(), list_emp);
                     lv.setAdapter(arrayAdapter);
 
+
+                    mShimmerViewContainer.stopShimmerAnimation();
+                   // mShimmerViewContainer.setVisibility(View.GONE);
+
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
+               // mShimmerViewContainer.stopShimmerAnimation();
+             //   mShimmerViewContainer.setVisibility(View.GONE);
                 Log.e("Failed to Connect REST",""+error.getCause());
             }
         });
@@ -61,4 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+    @Override
+    public void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+    }
+
 }
